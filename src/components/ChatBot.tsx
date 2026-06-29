@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, Sparkles, AlertCircle, HelpCircle } from "lucide-react";
+import { MessageSquare, X, Send, Sparkles, AlertCircle, Calendar, Users } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface Message {
@@ -12,13 +12,21 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Greetings, traveler. I am **Brown tree**, your dedicated Luxe Sanctuary concierge. How may I assist you on your journey of discovery today?",
+      text: "Greetings, traveler. I am **Brown tree**, your dedicated Luxe Sanctuary concierge. Which exquisite location do you prefer to explore?\n\n- **OOTY**\n- **KOTHAGIRI**\n- **KODAIKANAL**",
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [selectedLocation, setSelectedLocation] = useState<"OOTY" | "KOTHAGIRI" | "KODAIKANAL" | null>(null);
+
+  // Booking Flow States
+  const [bookingProperty, setBookingProperty] = useState<string | null>(null);
+  const [checkIn, setCheckIn] = useState<string>("");
+  const [checkOut, setCheckOut] = useState<string>("");
+  const [adults, setAdults] = useState<number>(2);
+  const [children, setChildren] = useState<number>(0);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +35,7 @@ export default function ChatBot() {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, bookingProperty]);
 
   // Handle unread counts
   useEffect(() => {
@@ -79,12 +87,56 @@ export default function ChatBot() {
     }
   };
 
-  const suggestions = [
-    "Recommend a romantic getaway in Ooty",
-    "Tell me about Azure Orchid Resort",
-    "What experiences are available?",
-    "How do I make a reservation?",
-  ];
+  const handleSelectLocation = (location: "OOTY" | "KOTHAGIRI" | "KODAIKANAL") => {
+    setSelectedLocation(location);
+    const userMsg: Message = { sender: "user", text: location };
+    
+    let botText = "";
+    if (location === "OOTY") {
+      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n\nClick on any property below to explore its luxurious details!";
+    } else if (location === "KOTHAGIRI") {
+      botText = "Excellent choice. Here is our retreat in **KOTHAGIRI**:\n\n- **Humming Bird by Brown Tree Resorts**\n\nClick below to explore its details!";
+    } else if (location === "KODAIKANAL") {
+      botText = "Excellent choice. Here is our resort in **KODAIKANAL**:\n\n- **Hotel Vetrivel International by Brown Tree Resorts**\n\nClick below to explore details!";
+    }
+
+    const botMsg: Message = { sender: "bot", text: botText };
+    setMessages((prev) => [...prev, userMsg, botMsg]);
+  };
+
+  const handleSelectProperty = (propertyName: string) => {
+    setSelectedLocation(null);
+    setBookingProperty(propertyName);
+    const userMsg: Message = { sender: "user", text: `I prefer ${propertyName}` };
+    const botMsg: Message = { 
+      sender: "bot", 
+      text: `Splendid! Let's arrange your reservation at **${propertyName}**.\n\nPlease select your preferred dates and guest count in the form below:` 
+    };
+    setMessages((prev) => [...prev, userMsg, botMsg]);
+  };
+
+  const handleBookNowSubmit = () => {
+    if (!checkIn || !checkOut) {
+      setError("Please select both Check-In and Check-Out dates.");
+      return;
+    }
+    setError(null);
+
+    const userMsgText = `Confirm booking for ${bookingProperty} from ${checkIn} to ${checkOut} (${adults} Adults, ${children} Children)`;
+    const userMsg: Message = { sender: "user", text: userMsgText };
+    
+    const confirmationId = `BT-${Math.floor(100000 + Math.random() * 900000)}`;
+    const botMsgText = `🎉 **Reservation Confirmed!**\n\nYour stay at **${bookingProperty}** has been successfully booked.\n\n**Booking Summary:**\n- **Property:** ${bookingProperty}\n- **Check-in:** ${checkIn}\n- **Check-out:** ${checkOut}\n- **Guests:** ${adults} Adult(s), ${children} Child(ren)\n- **Confirmation ID:** \`${confirmationId}\`\n\nOur hospitality host will contact you shortly to coordinate luxury transfers and personalized check-in privileges. We look forward to welcoming you! 🌿`;
+    
+    const botMsg: Message = { sender: "bot", text: botMsgText };
+    
+    setMessages((prev) => [...prev, userMsg, botMsg]);
+    setBookingProperty(null);
+    setCheckIn("");
+    setCheckOut("");
+    setAdults(2);
+    setChildren(0);
+  };
 
   // Simple formatter to support basic Markdown like bolding (**) and lists
   const formatMessage = (text: string) => {
@@ -176,6 +228,236 @@ export default function ChatBot() {
                 </div>
               ))}
 
+              {/* Interactive Location Preference Selector */}
+              {messages.length === 1 && !selectedLocation && !isLoading && (
+                <div className="space-y-2 animate-fade-in pl-1">
+                  <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-2">Select a Preferred Destination:</p>
+                  <div className="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleSelectLocation("OOTY")}
+                      className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <span className="text-lg">🌲</span>
+                        <div>
+                          <p className="text-xs font-semibold text-stone-850">OOTY</p>
+                          <p className="text-[10px] text-stone-500">The Abode & The Earthy Nest</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">SELECT →</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleSelectLocation("KOTHAGIRI")}
+                      className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <span className="text-lg">⛰️</span>
+                        <div>
+                          <p className="text-xs font-semibold text-stone-850">KOTHAGIRI</p>
+                          <p className="text-[10px] text-stone-500">Humming Bird Resorts</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">SELECT →</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleSelectLocation("KODAIKANAL")}
+                      className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <span className="text-lg">🌊</span>
+                        <div>
+                          <p className="text-xs font-semibold text-stone-850">KODAIKANAL</p>
+                          <p className="text-[10px] text-stone-500">Hotel Vetrivel International</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">SELECT →</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Sub-options for Selected Location */}
+              {selectedLocation && !isLoading && (
+                <div className="space-y-2 animate-fade-in pl-1">
+                  <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-2">Select a stay to reserve:</p>
+                  <div className="flex flex-col gap-2">
+                    {selectedLocation === "OOTY" && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => handleSelectProperty("THE ABODE BY BROWN TREE")}
+                          className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="text-lg">🏡</span>
+                            <div>
+                              <p className="text-xs font-semibold text-stone-850">THE ABODE BY BROWN TREE</p>
+                              <p className="text-[10px] text-stone-500">Luxury colonial heritage stay</p>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleSelectProperty("The Earthy Nest by Brown Tree")}
+                          className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="text-lg">🍃</span>
+                            <div>
+                              <p className="text-xs font-semibold text-stone-850">The Earthy Nest by Brown Tree</p>
+                              <p className="text-[10px] text-stone-500">Eco-luxury mountain view cabins</p>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
+                        </button>
+                      </>
+                    )}
+
+                    {selectedLocation === "KOTHAGIRI" && (
+                      <button
+                        type="button"
+                        onClick={() => handleSelectProperty("Humming Bird by Brown Tree Resorts")}
+                        className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-lg">🐦</span>
+                          <div>
+                            <p className="text-xs font-semibold text-stone-850">Humming Bird by Brown Tree Resorts</p>
+                            <p className="text-[10px] text-stone-500">Scenic valley-view suites & trails</p>
+                          </div>
+                        </div>
+                        <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
+                      </button>
+                    )}
+
+                    {selectedLocation === "KODAIKANAL" && (
+                      <button
+                        type="button"
+                        onClick={() => handleSelectProperty("Hotel Vetrivel International by Brown Tree Resorts")}
+                        className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-lg">🏨</span>
+                          <div>
+                            <p className="text-xs font-semibold text-stone-850">Hotel Vetrivel International by Brown Tree Resorts</p>
+                            <p className="text-[10px] text-stone-500">Premium luxury stays near the lake</p>
+                          </div>
+                        </div>
+                        <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedLocation(null)}
+                      className="w-full text-center hover:bg-stone-100 border border-dashed border-stone-200 p-2 rounded-xl transition-all text-[11px] font-medium text-stone-500 cursor-pointer"
+                    >
+                      ← Back to Locations
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Interactive Booking details & Guest count form */}
+              {bookingProperty && !isLoading && (
+                <div className="bg-white border border-stone-200/85 rounded-2xl p-4 shadow-md space-y-3.5 animate-fade-in pl-1">
+                  <div className="flex items-center space-x-2 text-stone-850 border-b border-stone-100 pb-2">
+                    <Calendar className="w-4 h-4 text-stone-600" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-stone-700">Reservation Form</span>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Check-In</label>
+                      <input
+                        type="date"
+                        value={checkIn}
+                        onChange={(e) => setCheckIn(e.target.value)}
+                        className="w-full text-xs bg-stone-50 border border-stone-200 rounded-lg p-2 outline-none focus:border-stone-400 focus:bg-white transition-all text-stone-800"
+                        min={new Date().toISOString().split('T')[0]}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Check-Out</label>
+                      <input
+                        type="date"
+                        value={checkOut}
+                        onChange={(e) => setCheckOut(e.target.value)}
+                        className="w-full text-xs bg-stone-50 border border-stone-200 rounded-lg p-2 outline-none focus:border-stone-400 focus:bg-white transition-all text-stone-800"
+                        min={checkIn || new Date().toISOString().split('T')[0]}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Adults</label>
+                      <div className="flex items-center border border-stone-200 rounded-lg bg-stone-50 overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => setAdults(prev => Math.max(1, prev - 1))}
+                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
+                        >
+                          -
+                        </button>
+                        <span className="flex-1 text-center text-xs font-semibold text-stone-850">{adults}</span>
+                        <button
+                          type="button"
+                          onClick={() => setAdults(prev => Math.min(10, prev + 1))}
+                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Children</label>
+                      <div className="flex items-center border border-stone-200 rounded-lg bg-stone-50 overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => setChildren(prev => Math.max(0, prev - 1))}
+                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
+                        >
+                          -
+                        </button>
+                        <span className="flex-1 text-center text-xs font-semibold text-stone-850">{children}</span>
+                        <button
+                          type="button"
+                          onClick={() => setChildren(prev => Math.min(10, prev + 1))}
+                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setBookingProperty(null)}
+                      className="flex-1 border border-stone-200 hover:bg-stone-100 text-stone-600 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleBookNowSubmit}
+                      className="flex-[2] bg-stone-800 hover:bg-stone-900 text-white py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all shadow-md cursor-pointer text-center"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Server/API Error Display */}
               {error && (
                 <div className="bg-red-50 border border-red-100 rounded-xl p-3.5 flex items-start space-x-2.5 text-red-800">
@@ -199,26 +481,6 @@ export default function ChatBot() {
               )}
               <div ref={messagesEndRef} />
             </div>
-
-            {/* Suggestions panel if conversation is new */}
-            {messages.length === 1 && !isLoading && (
-              <div className="px-5 py-3 bg-white border-t border-gray-100">
-                <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 flex items-center">
-                  <HelpCircle className="w-3 h-3 mr-1" /> Suggestion Prompts
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {suggestions.map((suggestion, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleSend(suggestion)}
-                      className="text-xs bg-stone-50 hover:bg-stone-100 text-stone-700 px-2.5 py-1.5 rounded-lg border border-stone-200 transition-all text-left truncate max-w-full"
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Input Footer */}
             <form
