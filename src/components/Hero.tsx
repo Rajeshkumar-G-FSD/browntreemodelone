@@ -5,6 +5,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { MapPin, Calendar, User, Search, Check, Sparkles } from "lucide-react";
+import heroVillaPool from "../assets/images/hero_villa_pool_1782714880799.jpg";
 
 interface HeroProps {
   onSearch: (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => void;
@@ -69,7 +70,7 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
       {/* Background Image with Dark Linear Overlay for contrast */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/hero_villa_pool_1782714880799.jpg"
+          src={heroVillaPool}
           alt="Luxe Sanctuary Villa Pool"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover brightness-[0.75] scale-105 transition-transform duration-[10s] ease-out select-none"

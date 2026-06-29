@@ -4,6 +4,9 @@
  */
 
 import { Property, Experience, Review, Destination } from "./types";
+import azureBayResort from "./assets/images/azure_bay_resort_1782714903912.jpg";
+import heritagePalace from "./assets/images/heritage_palace_1782714918331.jpg";
+import mistyPeaks from "./assets/images/misty_peaks_1782714932656.jpg";
 
 export const PROPERTIES: Property[] = [
   {
@@ -15,9 +18,9 @@ export const PROPERTIES: Property[] = [
     price: 750,
     rating: 4.9,
     reviewCount: 42,
-    image: "/src/assets/images/azure_bay_resort_1782714903912.jpg",
+    image: azureBayResort,
     gallery: [
-      "/src/assets/images/azure_bay_resort_1782714903912.jpg",
+      azureBayResort,
       "https://picsum.photos/seed/maldives1/1200/800",
       "https://picsum.photos/seed/maldives2/1200/800",
       "https://picsum.photos/seed/maldives3/1200/800"
@@ -67,9 +70,9 @@ export const PROPERTIES: Property[] = [
     price: 450,
     rating: 4.9,
     reviewCount: 118,
-    image: "/src/assets/images/heritage_palace_1782714918331.jpg",
+    image: heritagePalace,
     gallery: [
-      "/src/assets/images/heritage_palace_1782714918331.jpg",
+      heritagePalace,
       "https://picsum.photos/seed/jaipur1/1200/800",
       "https://picsum.photos/seed/jaipur2/1200/800",
       "https://picsum.photos/seed/jaipur3/1200/800"
@@ -119,9 +122,9 @@ export const PROPERTIES: Property[] = [
     price: 550,
     rating: 4.8,
     reviewCount: 36,
-    image: "/src/assets/images/misty_peaks_1782714932656.jpg",
+    image: mistyPeaks,
     gallery: [
-      "/src/assets/images/misty_peaks_1782714932656.jpg",
+      mistyPeaks,
       "https://picsum.photos/seed/swiss1/1200/800",
       "https://picsum.photos/seed/swiss2/1200/800",
       "https://picsum.photos/seed/swiss3/1200/800"
