@@ -6,6 +6,8 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 
+const btLogo = "https://i.postimg.cc/7ZFbxYFr/browntree-logo.png";
+
 interface HeaderProps {
   onNavigate: (sectionId: string) => void;
   onOpenBooking: () => void;
@@ -51,14 +53,13 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
         <button
           id="logo-button"
           onClick={() => handleItemClick("home")}
-          className="flex flex-col items-start focus:outline-none group text-left cursor-pointer"
+          className="flex items-center focus:outline-none group cursor-pointer"
         >
-          <span className="font-display text-2xl md:text-[28px] font-bold tracking-[0.2em] text-brand-primary transition-all duration-300 group-hover:text-brand-secondary">
-            LUXE SANC
-          </span>
-          <span className="text-[9px] font-sans tracking-[0.4em] font-semibold text-brand-secondary/85 -mt-1 ml-0.5 group-hover:text-brand-primary transition-all duration-300">
-            SANCTUARY
-          </span>
+          <img 
+            src={btLogo} 
+            alt="BT Logo" 
+            className="h-10 md:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105" 
+          />
         </button>
 
         {/* Desktop Navigation */}

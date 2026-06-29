@@ -10,17 +10,19 @@ import { Property } from "../types";
 interface PropertiesSectionProps {
   properties: Property[];
   onSelectProperty: (property: Property) => void;
+  onBookProperty: (property: Property) => void;
   filteredDestination: string;
 }
 
 export default function PropertiesSection({
   properties,
   onSelectProperty,
+  onBookProperty,
   filteredDestination,
 }: PropertiesSectionProps) {
   const [selectedType, setSelectedType] = useState<string>("All");
 
-  const propertyTypes = ["All", "Coastal Retreat", "Heritage Residence", "Mountain Lodge", "Forest Haven", "Desert Oasis"];
+  const propertyTypes = ["All", "Ooty", "Kothagiri", "Kodaikanal"];
 
   // Filter properties based on both selected type AND searched destination
   const filteredProperties = properties.filter((prop) => {
@@ -166,13 +168,16 @@ export default function PropertiesSection({
                         </div>
                       </div>
 
-                      {/* Circular arrow button that shifts style on hover */}
+                      {/* Direct Book Now Button */}
                       <button
-                        id={`explore-btn-${property.id}`}
-                        className="w-10 h-10 rounded-full bg-brand-primary group-hover:bg-brand-secondary text-brand-gold-light flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md cursor-pointer"
-                        aria-label="Explore sanctuary"
+                        id={`book-now-btn-${property.id}`}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent opening property details modal
+                          onBookProperty(property);
+                        }}
+                        className="font-sans text-[11px] font-bold tracking-[0.15em] uppercase bg-brand-primary hover:bg-brand-secondary text-brand-gold-light hover:text-white py-2 px-5 rounded-full transition-all duration-300 shadow-md cursor-pointer shrink-0 hover:scale-105 active:scale-95"
                       >
-                        <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                        Book Now
                       </button>
                     </div>
                   </div>

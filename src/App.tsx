@@ -14,6 +14,7 @@ import ContactSection from "./components/ContactSection";
 import PropertyDetailModal from "./components/PropertyDetailModal";
 import BookingDrawer from "./components/BookingDrawer";
 import Footer from "./components/Footer";
+import ChatBot from "./components/ChatBot";
 
 import { PROPERTIES, EXPERIENCES, REVIEWS, DESTINATIONS } from "./data";
 import { Property, Suite, Experience } from "./types";
@@ -112,12 +113,19 @@ export default function App() {
       const swiss = PROPERTIES.find((p) => p.id === "misty-peaks");
       setSelectedProperty(swiss || null);
     } else if (exp.id === "exp-healing") {
-      const jaipur = PROPERTIES.find((p) => p.id === "heritage-palace");
+      const jaipur = PROPERTIES.find((p) => p.id === "heritage-pine");
       setSelectedProperty(jaipur || null);
     } else {
-      const coastal = PROPERTIES.find((p) => p.id === "azure-bay");
+      const coastal = PROPERTIES.find((p) => p.id === "azure-orchid");
       setSelectedProperty(coastal || null);
     }
+    setPreselectedSuite(null);
+    setBookingOpen(true);
+  };
+
+  // Direct book-now clicked on properties section cards
+  const handleBookPropertyDirect = (property: Property) => {
+    setSelectedProperty(property);
     setPreselectedSuite(null);
     setBookingOpen(true);
   };
@@ -144,6 +152,7 @@ export default function App() {
         <PropertiesSection
           properties={PROPERTIES}
           onSelectProperty={handleOpenPropertyDetail}
+          onBookProperty={handleBookPropertyDirect}
           filteredDestination={filteredDestination}
         />
 
@@ -186,6 +195,9 @@ export default function App() {
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
       />
+
+      {/* Luxury Concierge Chatbot "Brown tree" */}
+      <ChatBot />
     </div>
   );
 }

@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Globe, Camera, Heart, Sparkles } from "lucide-react";
+import { Globe, Camera, Heart } from "lucide-react";
+
+const btLogo = "https://i.postimg.cc/7ZFbxYFr/browntree-logo.png";
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -35,13 +37,12 @@ export default function Footer({ onNavigate }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand & Description Block */}
           <div className="md:col-span-4 space-y-6">
-            <div className="space-y-2">
-              <span className="font-display text-3xl md:text-4xl font-bold tracking-[0.2em] text-brand-background block">
-                LUXE SANC
-              </span>
-              <span className="text-[10px] font-sans tracking-[0.4em] font-semibold text-brand-gold-light/95 block">
-                SANCTUARY
-              </span>
+            <div className="flex items-center">
+              <img 
+                src={btLogo} 
+                alt="BT Logo" 
+                className="h-12 md:h-14 w-auto object-contain" 
+              />
             </div>
             <p className="font-sans text-xs sm:text-sm text-brand-background/70 font-light leading-relaxed max-w-sm">
               Curating extraordinary sanctuaries for the modern traveler. Experience luxury redefined.
