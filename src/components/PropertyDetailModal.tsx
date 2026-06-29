@@ -159,7 +159,7 @@ export default function PropertyDetailModal({ property, onClose, onBookSuite }: 
                           {suite.name}
                         </h4>
                         <div className="flex items-baseline space-x-0.5 text-brand-primary">
-                          <span className="font-display text-lg font-bold">${suite.pricePerNight}</span>
+                          <span className="font-display text-lg font-bold">₹{suite.pricePerNight}</span>
                           <span className="text-[10px] text-brand-primary/50">/nt</span>
                         </div>
                       </div>

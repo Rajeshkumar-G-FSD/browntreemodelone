@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star, ArrowRight, Compass, Filter } from "lucide-react";
 import { motion } from "motion/react";
 import { Property } from "../types";
@@ -58,6 +58,20 @@ export default function PropertiesSection({
   filteredDestination,
 }: PropertiesSectionProps) {
   const [selectedType, setSelectedType] = useState<string>("All");
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    if (!hasMounted) {
+      setHasMounted(true);
+      return;
+    }
+    setIsRefreshing(true);
+    const timer = setTimeout(() => {
+      setIsRefreshing(false);
+    }, 750);
+    return () => clearTimeout(timer);
+  }, [selectedType, filteredDestination]);
 
   const propertyTypes = ["All", "Ooty", "Kothagiri", "Kodaikanal"];
 
@@ -150,7 +164,24 @@ export default function PropertiesSection({
         </motion.div>
 
         {/* Properties Cards Grid */}
-        {filteredProperties.length === 0 ? (
+        {isRefreshing ? (
+          <div className="flex flex-col items-center justify-center py-24 space-y-6">
+            <div className="relative">
+              <div className="w-16 h-16 rounded-full border border-brand-primary/10 flex items-center justify-center">
+                <Compass className="text-brand-secondary animate-spin text-brand-secondary/80" size={28} style={{ animationDuration: "3s" }} />
+              </div>
+              <div className="absolute inset-0 w-16 h-16 rounded-full border-2 border-brand-secondary border-t-transparent animate-spin"></div>
+            </div>
+            <div className="text-center space-y-1.5 animate-pulse">
+              <p className="font-display text-sm tracking-widest text-brand-primary/80 uppercase font-medium">
+                Refreshing Sanctuary Collection
+              </p>
+              <p className="text-[10px] tracking-wider text-brand-secondary uppercase font-bold">
+                Optimizing Mist-Mountain Images
+              </p>
+            </div>
+          </div>
+        ) : filteredProperties.length === 0 ? (
           <motion.div 
             className="text-center py-20 bg-white/40 rounded-3xl border border-brand-primary/5 space-y-3"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -242,7 +273,7 @@ export default function PropertiesSection({
                           STARTING AT
                         </span>
                         <div className="flex items-baseline space-x-1">
-                          <span className="font-display text-2xl font-semibold text-brand-primary">${property.price}</span>
+                          <span className="font-display text-2xl font-semibold text-brand-primary">₹{property.price}</span>
                           <span className="text-[11px] text-brand-primary/50">/nt</span>
                         </div>
                       </div>

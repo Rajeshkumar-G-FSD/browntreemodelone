@@ -93,7 +93,7 @@ export default function ChatBot() {
     
     let botText = "";
     if (location === "OOTY") {
-      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n\nClick on any property below to explore its luxurious details!";
+      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n3. **Tea Leaf Stays by Brown Tree Resorts**\n\nClick on any property below to explore its luxurious details!";
     } else if (location === "KOTHAGIRI") {
       botText = "Excellent choice. Here is our retreat in **KOTHAGIRI**:\n\n- **Humming Bird by Brown Tree Resorts**\n\nClick below to explore its details!";
     } else if (location === "KODAIKANAL") {
@@ -242,7 +242,7 @@ export default function ChatBot() {
                         <span className="text-lg">🌲</span>
                         <div>
                           <p className="text-xs font-semibold text-stone-850">OOTY</p>
-                          <p className="text-[10px] text-stone-500">The Abode & The Earthy Nest</p>
+                          <p className="text-[10px] text-stone-500">The Abode, Earthy Nest & Tea Leaf Stays</p>
                         </div>
                       </div>
                       <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">SELECT →</span>
@@ -313,6 +313,21 @@ export default function ChatBot() {
                             <div>
                               <p className="text-xs font-semibold text-stone-850">The Earthy Nest by Brown Tree</p>
                               <p className="text-[10px] text-stone-500">Eco-luxury mountain view cabins</p>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleSelectProperty("Tea Leaf Stays by Brown Tree Resorts")}
+                          className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="text-lg">🌱</span>
+                            <div>
+                              <p className="text-xs font-semibold text-stone-850">Tea Leaf Stays by Brown Tree Resorts</p>
+                              <p className="text-[10px] text-stone-500">High-altitude luxury tea estate stays</p>
                             </div>
                           </div>
                           <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>

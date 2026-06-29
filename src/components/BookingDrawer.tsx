@@ -75,8 +75,8 @@ export default function BookingDrawer({
   // Pricing calculations
   const pricePerNight = suite ? suite.pricePerNight : 0;
   const staySubtotal = pricePerNight * nights;
-  const yachtCost = addYacht ? 1800 : 0;
-  const somaCost = addSoma ? 350 : 0;
+  const yachtCost = addYacht ? 18000 : 0;
+  const somaCost = addSoma ? 3500 : 0;
   const totalCost = staySubtotal + yachtCost + somaCost;
 
   const handleConfirmReservation = (e: FormEvent) => {
@@ -202,7 +202,7 @@ export default function BookingDrawer({
 
                 <div className="flex justify-between border-t border-brand-primary/5 pt-3 mt-3 text-brand-primary">
                   <span className="text-[9px] font-bold tracking-wider uppercase mt-1">TOTAL CHARGED</span>
-                  <span className="font-display text-xl font-bold">${totalCost}</span>
+                  <span className="font-display text-xl font-bold">₹{totalCost}</span>
                 </div>
               </div>
             </div>
@@ -259,7 +259,7 @@ export default function BookingDrawer({
                 >
                   {property?.suites.map((s) => (
                     <option key={s.id} value={s.id}>
-                      {s.name} — ${s.pricePerNight}/nt
+                      {s.name} — ₹{s.pricePerNight}/nt
                     </option>
                   ))}
                 </select>
@@ -351,7 +351,7 @@ export default function BookingDrawer({
                   />
                   <div>
                     <span className="block text-xs font-bold text-brand-primary">Horizon Private Yacht Charter</span>
-                    <span className="block text-[10px] text-brand-primary/55 font-light">Full-day luxury oceanic cruise under professional navigation (+$1,800)</span>
+                    <span className="block text-[10px] text-brand-primary/55 font-light">Full-day luxury oceanic cruise under professional navigation (+₹18,000)</span>
                   </div>
                 </label>
 
@@ -365,7 +365,7 @@ export default function BookingDrawer({
                   />
                   <div>
                     <span className="block text-xs font-bold text-brand-primary">Soma Ayurvedic Healing Journey</span>
-                    <span className="block text-[10px] text-brand-primary/55 font-light">Traditional diagnostics, sound bowl vibrational, four-hand herbal massage (+$350)</span>
+                    <span className="block text-[10px] text-brand-primary/55 font-light">Traditional diagnostics, sound bowl vibrational, four-hand herbal massage (+₹3,500)</span>
                   </div>
                 </label>
               </div>
@@ -379,18 +379,18 @@ export default function BookingDrawer({
                 <div className="space-y-1.5 text-xs text-brand-primary">
                   <div className="flex justify-between">
                     <span className="font-light text-brand-primary/65">Stay Subtotal ({nights} nights):</span>
-                    <span className="font-semibold">${staySubtotal}</span>
+                    <span className="font-semibold">₹{staySubtotal}</span>
                   </div>
                   {addYacht && (
                     <div className="flex justify-between text-brand-secondary">
                       <span>Bespoke Yacht Package:</span>
-                      <span className="font-semibold">+$1,800</span>
+                      <span className="font-semibold">+₹18,000</span>
                     </div>
                   )}
                   {addSoma && (
                     <div className="flex justify-between text-brand-secondary">
                       <span>Soma Ayurvedic Healing:</span>
-                      <span className="font-semibold">+$350</span>
+                      <span className="font-semibold">+₹3,500</span>
                     </div>
                   )}
                 </div>
@@ -400,7 +400,7 @@ export default function BookingDrawer({
                     <Sparkles size={12} className="text-brand-secondary" />
                     <span className="text-[10px] tracking-wider uppercase mt-0.5">ESTIMATED TOTAL</span>
                   </div>
-                  <span className="font-display text-lg md:text-xl">${totalCost}</span>
+                  <span className="font-display text-lg md:text-xl">₹{totalCost}</span>
                 </div>
               </div>
             </div>

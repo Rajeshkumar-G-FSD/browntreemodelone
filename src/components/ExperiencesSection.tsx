@@ -4,7 +4,7 @@
  */
 
 import { useState } from "react";
-import { Sparkles, Compass, Clock, DollarSign, Check, ChevronRight } from "lucide-react";
+import { Sparkles, Compass, Clock, Check, ChevronRight } from "lucide-react";
 import { Experience } from "../types";
 
 interface ExperiencesSectionProps {
@@ -132,8 +132,8 @@ export default function ExperiencesSection({ experiences, onBookExperience }: Ex
                       <Clock size={14} />
                       <span className="text-[11px] font-semibold tracking-wider uppercase">{activeExp.duration}</span>
                     </div>
-                    <div className="flex items-center space-x-0.5 text-brand-primary">
-                      <DollarSign size={14} className="text-brand-secondary -mr-0.5" />
+                    <div className="flex items-center space-x-1 text-brand-primary">
+                      <span className="font-display text-lg font-bold text-brand-secondary">₹</span>
                       <span className="font-display text-lg font-bold">{activeExp.pricePerPerson}</span>
                       <span className="text-[10px] text-brand-primary/55 font-semibold">/person</span>
                     </div>

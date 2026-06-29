@@ -11,11 +11,11 @@ import mistyPeaks from "./assets/images/misty_peaks_1782714932656.jpg";
 export const PROPERTIES: Property[] = [
   {
     id: "azure-orchid",
-    name: "Azure Orchid Resort",
+    name: "The Earthy Nest by Brown Tree",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
-    price: 350,
+    price: 3000,
     rating: 4.9,
     reviewCount: 42,
     image: azureBayResort,
@@ -25,7 +25,7 @@ export const PROPERTIES: Property[] = [
       "https://picsum.photos/seed/maldives2/1200/800",
       "https://picsum.photos/seed/maldives3/1200/800"
     ],
-    description: "Nestled amongst Ooty's emerald tea plantations and wild orchids, Azure Orchid Resort offers panoramic views of Nilgiri valleys. Enjoy high-altitude luxury, cozy stone fireplaces, private balconies looking out over the morning mist, and outdoor dining under the starry sky.",
+    description: "Nestled amongst Ooty's emerald tea plantations and serene highlands, The Earthy Nest by Brown Tree offers panoramic views of Nilgiri valleys. Enjoy high-altitude luxury, cozy stone fireplaces, private balconies looking out over the morning mist, and outdoor dining under the starry sky.",
     highlights: [
       "Overlooking Nilgiri Tea Valleys",
       "Heated Glass-Wall Infinity Pool",
@@ -44,7 +44,7 @@ export const PROPERTIES: Property[] = [
         id: "orchid-pavilion",
         name: "Orchid Valley Pavilion",
         description: "Elegant mountain-view pavilion boasting floor-to-ceiling glass looking out over the tea estates, with a private warm tub.",
-        pricePerNight: 350,
+        pricePerNight: 3000,
         maxGuests: 2,
         size: "140 sqm / 1,500 sqft",
         amenities: ["Plunge Pool", "Outdoor Rainfall Shower", "Glass Wall Panels", "Bose Sound System"]
@@ -53,7 +53,7 @@ export const PROPERTIES: Property[] = [
         id: "sunset-valley-suite",
         name: "Sunset Valley Suite",
         description: "A sprawling mountain-top residence with premium sunset vistas and a private outdoor fireplace setup.",
-        pricePerNight: 550,
+        pricePerNight: 4500,
         maxGuests: 4,
         size: "280 sqm / 3,010 sqft",
         amenities: ["Large Infinity Pool", "Kitchenette", "Private Hammock", "Sun Loungers", "Wellness Room"]
@@ -63,11 +63,11 @@ export const PROPERTIES: Property[] = [
   },
   {
     id: "heritage-pine",
-    name: "Heritage Pine Palace",
+    name: "THE ABODE BY BROWN TREE",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
-    price: 450,
+    price: 3000,
     rating: 4.9,
     reviewCount: 118,
     image: heritagePalace,
@@ -77,7 +77,7 @@ export const PROPERTIES: Property[] = [
       "https://picsum.photos/seed/jaipur2/1200/800",
       "https://picsum.photos/seed/jaipur3/1200/800"
     ],
-    description: "An exquisite heritage revival of colonial-era Nilgiri estate architecture, redesigned with sleek contemporary glass screens and classic royal luxury. Surrounded by towering pine trees and private British-style gardens, the palace offers unmatched mountain serenity.",
+    description: "An exquisite heritage revival of colonial-era Nilgiri estate architecture, redesigned with sleek contemporary glass screens and classic royal luxury. THE ABODE BY BROWN TREE is surrounded by towering pine trees and private British-style gardens, offering unmatched mountain serenity.",
     highlights: [
       "Colonial-Era Heritage Estate",
       "Acre-Wide Pine Gardens",
@@ -96,7 +96,7 @@ export const PROPERTIES: Property[] = [
         id: "pine-palace-suite",
         name: "Maharaja Pine Suite",
         description: "A grand colonial suite featuring wood paneling, copper soaking tubs, and private garden views.",
-        pricePerNight: 450,
+        pricePerNight: 3000,
         maxGuests: 2,
         size: "120 sqm / 1,290 sqft",
         amenities: ["Copper Soaking Tub", "Hand-woven Indian Rugs", "Terrace Bed", "Luxury Linens", "Pillow Menu"]
@@ -105,7 +105,7 @@ export const PROPERTIES: Property[] = [
         id: "royal-garden-pavilion",
         name: "Royal Garden Pavilion",
         description: "Grand historic sanctuary with exclusive garden access, high ceilings, private pool, and historical antique furnishings.",
-        pricePerNight: 750,
+        pricePerNight: 4500,
         maxGuests: 3,
         size: "210 sqm / 2,260 sqft",
         amenities: ["Private Courtyard Pool", "Dedicated Chauffeur", "Antique Desk", "Outdoor Daybed"]
@@ -114,12 +114,63 @@ export const PROPERTIES: Property[] = [
     coordinates: { lat: 11.4050, lng: 76.7120 }
   },
   {
+    id: "tea-leaf-stays",
+    name: "Tea Leaf Stays by Brown Tree Resorts",
+    type: "Ooty",
+    location: "Ooty, India",
+    region: "Nilgiri Hills",
+    price: 5500,
+    rating: 4.8,
+    reviewCount: 24,
+    image: "https://images.unsplash.com/photo-1555899434-94d1368aa712?auto=format&fit=crop&w=800&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1555899434-94d1368aa712?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1563911302283-d2bc1507023a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
+    ],
+    description: "Enveloped by sprawling, lush organic tea plantations in Ooty, Tea Leaf Stays by Brown Tree Resorts is an exquisite sanctuary designed for discerning travelers. Enjoy high-altitude luxury with private mist-shrouded sun decks, premium tea-tasting sessions, and custom architectural glass facades that offer views of the spectacular Nilgiri peaks.",
+    highlights: [
+      "Organic Tea Plantation Views",
+      "Bespoke Tea Sommelier Tasting",
+      "Panoramic Mist-View Sun Decks"
+    ],
+    amenities: [
+      "Private Organic Tea Gardens",
+      "Dedicated Butler & Estate Chef",
+      "Panoramic Sun Decks",
+      "Glass-Wall Mountain Showers",
+      "Artisanal Teapot Selection",
+      "In-Villa Fireplace Lounge"
+    ],
+    suites: [
+      {
+        id: "tea-leaf-estate-suite",
+        name: "Organic Tea Leaf Suite",
+        description: "A gorgeous wood-trimmed suite overlooking the lush estate, complete with local organic tea selections and cozy fireplaces.",
+        pricePerNight: 5500,
+        maxGuests: 2,
+        size: "135 sqm / 1,450 sqft",
+        amenities: ["Artisanal Teapot", "Fireplace Lounge", "Terrace Loungers", "Luxury Silk Linens"]
+      },
+      {
+        id: "tea-leaf-presidential-pavilion",
+        name: "Presidential Tea Valley Pavilion",
+        description: "An ultra-luxury estate pavilion featuring an outdoor heated jacuzzi and 360-degree views of the mist-shrouded valleys.",
+        pricePerNight: 7500,
+        maxGuests: 4,
+        size: "260 sqm / 2,800 sqft",
+        amenities: ["Heated Geothermal Jacuzzi", "Outdoor Dining Area", "Fully Retractable Glass Walls", "Personal Butler Services"]
+      }
+    ],
+    coordinates: { lat: 11.4150, lng: 76.6850 }
+  },
+  {
     id: "misty-peaks",
-    name: "Misty Peaks Lodge",
+    name: "Humming Bird by Brown Tree Resorts",
     type: "Kothagiri",
     location: "Kothagiri, India",
     region: "Nilgiri Hills",
-    price: 320,
+    price: 5000,
     rating: 4.8,
     reviewCount: 36,
     image: mistyPeaks,
@@ -129,7 +180,7 @@ export const PROPERTIES: Property[] = [
       "https://picsum.photos/seed/swiss2/1200/800",
       "https://picsum.photos/seed/swiss3/1200/800"
     ],
-    description: "Perched majestically among Kothagiri's cloud-kissed heights, Misty Peaks Lodge combines rough-hewn cedar timber structures with soaring minimalist floor-to-ceiling glass. Enjoy private stargazing, a warm hand-carved stone fireplace, and pristine views of cascading waterfalls.",
+    description: "Perched majestically among Kothagiri's cloud-kissed heights, Humming Bird by Brown Tree Resorts combines rough-hewn cedar timber structures with soaring minimalist floor-to-ceiling glass. Enjoy private stargazing, a warm hand-carved stone fireplace, and pristine views of cascading waterfalls.",
     highlights: [
       "Quiet Offbeat Highland Escape",
       "In-Lodge Stargazing Telescope",
@@ -148,7 +199,7 @@ export const PROPERTIES: Property[] = [
         id: "alpine-hearth",
         name: "Highland Hearth Loft",
         description: "A cozy log-and-glass loft with double-sided stone fireplace, premium local upholstery, and spectacular waterfall views.",
-        pricePerNight: 320,
+        pricePerNight: 5000,
         maxGuests: 2,
         size: "95 sqm / 1,020 sqft",
         amenities: ["Stone Fireplace", "Telescope Access", "Heated Floors", "Steam Shower", "Fine Local Tea Bar"]
@@ -157,7 +208,7 @@ export const PROPERTIES: Property[] = [
         id: "glacial-vista",
         name: "Summit Ridge Vista Suite",
         description: "Superb split-level suite offering panoramic Nilgiri peak vistas, private outdoor hot tub, and direct plantation path access.",
-        pricePerNight: 520,
+        pricePerNight: 7500,
         maxGuests: 4,
         size: "185 sqm / 1,990 sqft",
         amenities: ["Outdoor Geothermal Tub", "Private Sauna", "Vaulted Cedar Ceilings", "Wine Dispenser"]
@@ -167,11 +218,11 @@ export const PROPERTIES: Property[] = [
   },
   {
     id: "mirage-ridge",
-    name: "Mirage Ridge Sanctuary",
+    name: "Hotel Vetrivel International by Brown Tree Resorts",
     type: "Kodaikanal",
     location: "Kodaikanal, India",
     region: "Palani Hills",
-    price: 280,
+    price: 4500,
     rating: 4.9,
     reviewCount: 29,
     image: "https://picsum.photos/seed/morocco/800/600",
@@ -180,7 +231,7 @@ export const PROPERTIES: Property[] = [
       "https://picsum.photos/seed/morocco2/1200/800",
       "https://picsum.photos/seed/morocco3/1200/800"
     ],
-    description: "A stunning architecture of hand-cut local stone and sleek brass detailing situated high on Kodaikanal's dramatic ridges. Offers spectacular sunrise valley-view pools, custom velvet upholstery, and traditional South Indian mountain hospitality with high-end modern comforts.",
+    description: "A stunning architecture of hand-cut local stone and sleek brass detailing situated high on Kodaikanal's dramatic ridges. Hotel Vetrivel International by Brown Tree Resorts offers spectacular sunrise valley-view pools, custom velvet upholstery, and traditional South Indian mountain hospitality with high-end modern comforts.",
     highlights: [
       "Epic Valley-Sunset Views",
       "Astronomer-Guided Stargazing",
@@ -199,55 +250,13 @@ export const PROPERTIES: Property[] = [
         id: "nomad-dome",
         name: "Royal Ridge Dome",
         description: "An elegant structure featuring a retractable star-viewing roof, local plaster details, and a cozy central fire pit.",
-        pricePerNight: 280,
+        pricePerNight: 4500,
         maxGuests: 2,
         size: "110 sqm / 1,180 sqft",
         amenities: ["Retractable Sky Roof", "Hammam Shower", "Handmade Woolen Carpet", "Astronomical Telescope"]
       }
     ],
     coordinates: { lat: 10.2381, lng: 77.4892 }
-  },
-  {
-    id: "komorebi-lake",
-    name: "Komorebi Lake Sanctuary",
-    type: "Kodaikanal",
-    location: "Kodaikanal, India",
-    region: "Palani Hills",
-    price: 420,
-    rating: 5.0,
-    reviewCount: 54,
-    image: "https://picsum.photos/seed/kyoto/800/600",
-    gallery: [
-      "https://picsum.photos/seed/kyoto/1200/800",
-      "https://picsum.photos/seed/kyoto2/1200/800",
-      "https://picsum.photos/seed/kyoto3/1200/800"
-    ],
-    description: "A tranquil sanctuary nestled deep in the pine and eucalyptus forests of Kodaikanal. Framed by masterfully crafted cedar wood and glass, Komorebi features private rock-gardens, mineral hot spring baths, and exquisite lake views.",
-    highlights: [
-      "Private Forest Onsen Bath",
-      "Rock Gardens & Pine Trails",
-      "Exquisite Private Lake Dining"
-    ],
-    amenities: [
-      "Outdoor Mineral Onsen",
-      "Tea Ceremony Pavilion",
-      "Forest Meditation Deck",
-      "Shiatsu Treatment Suite",
-      "Zen Calligraphy Salon",
-      "Tatami Dining Pavilion"
-    ],
-    suites: [
-      {
-        id: "hinoki-villa",
-        name: "Forest Cypress Villa",
-        description: "An immersive forest sanctuary featuring sliding glass doors, luxury bedding, and a private natural wood hot-spring tub.",
-        pricePerNight: 420,
-        maxGuests: 2,
-        size: "130 sqm / 1,400 sqft",
-        amenities: ["Wooden Cypress Tub", "Cypress Shoji Walls", "Warm Robes", "Custom Tea Selector"]
-      }
-    ],
-    coordinates: { lat: 10.2312, lng: 77.4921 }
   }
 ];
 
@@ -259,7 +268,7 @@ export const EXPERIENCES: Experience[] = [
     description: "Embark on a private vintage toy train journey, weaving through tea estates, historic bridges, and pine forests, accompanied by local historians and a custom gourmet picnic basket.",
     image: "https://picsum.photos/seed/yacht/800/500",
     duration: "Full Day (8 Hours)",
-    pricePerPerson: 180,
+    pricePerPerson: 1800,
     details: [
       "Exclusive private toy train cabin charter",
       "Bespoke multi-course hill-station picnic",
@@ -274,7 +283,7 @@ export const EXPERIENCES: Experience[] = [
     description: "A transformative deep-wellness retreat curated by traditional master practitioners. Includes a personalized body constitution diagnosis, customized herbal oils, organic local botanical therapy, and sound resonance healing.",
     image: "https://picsum.photos/seed/spa/800/500",
     duration: "3 Hours",
-    pricePerPerson: 350,
+    pricePerPerson: 3500,
     details: [
       "Ayurvedic Doctor constitution consult",
       "Four-hand synchronous botanical massage",
@@ -289,7 +298,7 @@ export const EXPERIENCES: Experience[] = [
     description: "Venture deep into the pristine, hidden Shola forest trails of Kodaikanal. Spot indigenous wildlife, admire ancient botanical species, and enjoy a high-altitude organic lunch prepared by our culinary team.",
     image: "https://picsum.photos/seed/heli/800/500",
     duration: "6 Hours",
-    pricePerPerson: 250,
+    pricePerPerson: 2500,
     details: [
       "Custom-guided private 4x4 forest safari",
       "Veteran naturalist and wildlife photographer",
@@ -339,7 +348,7 @@ export const DESTINATIONS: Destination[] = [
     country: "Tamil Nadu, India",
     image: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=600&q=80",
     description: "Queen of Hill Stations, known for its sprawling tea gardens and misty valleys.",
-    propertyCount: 2
+    propertyCount: 3
   },
   {
     id: "dest-kothagiri",
@@ -355,6 +364,6 @@ export const DESTINATIONS: Destination[] = [
     country: "Tamil Nadu, India",
     image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80",
     description: "Princess of Hill Stations, featuring beautiful lakes, pine forests and cold mist.",
-    propertyCount: 2
+    propertyCount: 1
   }
 ];

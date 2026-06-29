@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { MapPin, Calendar, User, Search, Check, Sparkles } from "lucide-react";
+import { MapPin, Calendar, User, Search, Check, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import TextType from "./TextType";
 import BlurText from "./BlurText";
 
@@ -20,12 +20,14 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
   const [destination, setDestination] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState(2);
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
 
   // Popover States
   const [showDestPopover, setShowDestPopover] = useState(false);
   const [showDatesPopover, setShowDatesPopover] = useState(false);
   const [showGuestsPopover, setShowGuestsPopover] = useState(false);
+  const [expandedDest, setExpandedDest] = useState<string | null>(null);
 
   const destRef = useRef<HTMLDivElement>(null);
   const datesRef = useRef<HTMLDivElement>(null);
@@ -36,6 +38,12 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
     { label: "Kothagiri", region: "Nilgiri Hills, India" },
     { label: "Kodaikanal", region: "Palani Hills, India" }
   ];
+
+  const destinationProperties: Record<string, string[]> = {
+    Ooty: ["THE ABODE BY BROWN TREE", "The Earthy Nest by Brown Tree", "Tea Leaf Stays by Brown Tree Resorts"],
+    Kothagiri: ["Humming Bird by Brown Tree Resorts"],
+    Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"]
+  };
 
   // Close popovers on click outside
   useEffect(() => {
@@ -59,9 +67,11 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
       destination,
       checkIn: checkIn || "Anytime",
       checkOut: checkOut || "Anytime",
-      guests
+      guests: adults + children
     });
   };
+
+  const todayStr = new Date().toISOString().split("T")[0];
 
   return (
     <section
@@ -154,37 +164,96 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
             </button>
 
             {showDestPopover && (
-              <div className="absolute top-[110%] left-0 z-30 w-full sm:w-[280px] bg-white rounded-2xl shadow-xl border border-brand-primary/5 p-3 mt-1 animate-scale-up">
-                <p className="text-[10px] font-bold tracking-widest text-brand-primary/50 px-2 pb-2 border-b border-brand-primary/5">
+              <div className="absolute bottom-[115%] left-0 z-40 w-full sm:w-[320px] bg-white rounded-2xl shadow-2xl border border-stone-200/50 p-4 mb-2 animate-scale-up">
+                <p className="text-[10px] font-bold tracking-widest text-stone-400 px-2 pb-2.5 border-b border-stone-100 uppercase">
                   POPULAR SANCTUARIES
                 </p>
-                <div className="space-y-1 mt-2">
+                <div className="space-y-2 mt-3 max-h-[360px] overflow-y-auto pr-1">
                   <button
                     onClick={() => {
                       setDestination("");
                       setShowDestPopover(false);
+                      setExpandedDest(null);
                     }}
-                    className="flex items-center justify-between w-full text-left text-xs font-semibold py-2 px-3 rounded-lg hover:bg-brand-background text-brand-primary"
+                    className="flex items-center justify-between w-full text-left text-xs font-semibold py-2 px-3 rounded-xl hover:bg-stone-50 text-brand-primary cursor-pointer transition-all"
                   >
                     <span>All Locations</span>
                     {destination === "" && <Check size={14} className="text-brand-secondary" />}
                   </button>
-                  {destinationsList.map((dest) => (
-                    <button
-                      key={dest.label}
-                      onClick={() => {
-                        setDestination(dest.label);
-                        setShowDestPopover(false);
-                      }}
-                      className="flex items-center justify-between w-full text-left py-2 px-3 rounded-lg hover:bg-brand-background transition cursor-pointer"
-                    >
-                      <div>
-                        <span className="block text-xs font-semibold text-brand-primary">{dest.label}</span>
-                        <span className="block text-[10px] text-brand-primary/50">{dest.region}</span>
+
+                  {destinationsList.map((dest) => {
+                    const isExpanded = expandedDest === dest.label;
+                    const props = destinationProperties[dest.label] || [];
+                    
+                    return (
+                      <div key={dest.label} className="border border-stone-100 rounded-xl overflow-hidden bg-white shadow-sm transition-all duration-300">
+                        {/* Parent Destination Header Button */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setExpandedDest(isExpanded ? null : dest.label);
+                          }}
+                          className={`flex items-center justify-between w-full text-left py-2.5 px-3 transition-all cursor-pointer ${
+                            isExpanded ? "bg-stone-50 font-semibold" : "hover:bg-stone-50/50"
+                          }`}
+                        >
+                          <div>
+                            <span className="block text-xs font-bold text-brand-primary uppercase tracking-wide">{dest.label}</span>
+                            <span className="block text-[10px] text-stone-400 font-medium">{dest.region}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            {destination.toLowerCase().includes(dest.label.toLowerCase()) && (
+                              <Check size={14} className="text-brand-secondary" />
+                            )}
+                            {isExpanded ? (
+                              <ChevronUp size={14} className="text-stone-400" />
+                            ) : (
+                              <ChevronDown size={14} className="text-stone-400" />
+                            )}
+                          </div>
+                        </button>
+
+                        {/* Children Properties Accordion Content */}
+                        {isExpanded && (
+                          <div className="bg-stone-50/40 px-2 py-2 border-t border-stone-100 space-y-1">
+                            {/* Option to select all of the destination */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setDestination(dest.label);
+                                setShowDestPopover(false);
+                                setExpandedDest(null);
+                              }}
+                              className="flex items-center justify-between w-full text-left text-[11px] font-semibold py-1.5 px-2.5 rounded-lg hover:bg-stone-100 text-stone-500 transition"
+                            >
+                              <span>Explore All in {dest.label}</span>
+                              {destination === dest.label && <Check size={12} className="text-brand-secondary" />}
+                            </button>
+
+                            {/* Specific properties */}
+                            {props.map((prop) => (
+                              <button
+                                key={prop}
+                                type="button"
+                                onClick={() => {
+                                  setDestination(prop);
+                                  setShowDestPopover(false);
+                                  setExpandedDest(null);
+                                }}
+                                className="flex items-center justify-between w-full text-left text-[11px] font-medium py-2 px-2.5 rounded-lg bg-white border border-stone-200/50 hover:border-stone-300 text-brand-primary transition shadow-sm hover:shadow-md"
+                              >
+                                <div className="flex items-center space-x-1.5">
+                                  <span className="text-xs">🏡</span>
+                                  <span className="truncate">{prop}</span>
+                                </div>
+                                {destination === prop && <Check size={12} className="text-brand-secondary" />}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                      {destination === dest.label && <Check size={14} className="text-brand-secondary" />}
-                    </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -225,7 +294,14 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
                     <input
                       type="date"
                       value={checkIn}
-                      onChange={(e) => setCheckIn(e.target.value)}
+                      min={todayStr}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setCheckIn(val);
+                        if (!checkOut || checkOut < val) {
+                          setCheckOut(val);
+                        }
+                      }}
                       className="w-full border border-brand-primary/15 rounded-lg p-2 text-xs text-brand-primary focus:outline-none focus:border-brand-secondary"
                     />
                   </div>
@@ -236,6 +312,7 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
                     <input
                       type="date"
                       value={checkOut}
+                      min={checkIn || todayStr}
                       onChange={(e) => setCheckOut(e.target.value)}
                       className="w-full border border-brand-primary/15 rounded-lg p-2 text-xs text-brand-primary focus:outline-none focus:border-brand-secondary"
                     />
@@ -279,37 +356,66 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
                   GUESTS
                 </span>
                 <span className="block text-sm font-semibold text-brand-primary truncate">
-                  {guests} {guests === 1 ? "Guest" : "Guests"}
+                  {adults} Ad, {children} Ch
                 </span>
               </div>
             </button>
 
             {showGuestsPopover && (
-              <div className="absolute top-[110%] right-0 z-30 w-full sm:w-[240px] bg-white rounded-2xl shadow-xl border border-brand-primary/5 p-4 mt-1 animate-scale-up">
+              <div className="absolute top-[110%] right-0 z-30 w-full sm:w-[260px] bg-white rounded-2xl shadow-xl border border-brand-primary/5 p-4 mt-1 animate-scale-up space-y-3">
                 <p className="text-[10px] font-bold tracking-widest text-brand-primary/50 pb-2 border-b border-brand-primary/5">
                   SELECT GUESTS
                 </p>
-                <div className="flex items-center justify-between py-3">
-                  <span className="text-xs font-semibold text-brand-primary">Adults & Children</span>
+                
+                {/* Adults row */}
+                <div className="flex items-center justify-between py-1">
+                  <div>
+                    <span className="block text-xs font-semibold text-brand-primary">Adults</span>
+                    <span className="block text-[9px] text-stone-400">Ages 13 or above</span>
+                  </div>
                   <div className="flex items-center space-x-3">
                     <button
-                      onClick={() => setGuests(Math.max(1, guests - 1))}
-                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none"
+                      onClick={() => setAdults(Math.max(1, adults - 1))}
+                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
                     >
                       -
                     </button>
-                    <span className="text-sm font-bold text-brand-primary w-4 text-center">{guests}</span>
+                    <span className="text-sm font-bold text-brand-primary w-4 text-center">{adults}</span>
                     <button
-                      onClick={() => setGuests(Math.min(10, guests + 1))}
-                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none"
+                      onClick={() => setAdults(Math.min(10, adults + 1))}
+                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
                     >
                       +
                     </button>
                   </div>
                 </div>
+
+                {/* Children row */}
+                <div className="flex items-center justify-between py-1">
+                  <div>
+                    <span className="block text-xs font-semibold text-brand-primary">Children</span>
+                    <span className="block text-[9px] text-stone-400">Ages 2–12</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={() => setChildren(Math.max(0, children - 1))}
+                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="text-sm font-bold text-brand-primary w-4 text-center">{children}</span>
+                    <button
+                      onClick={() => setChildren(Math.min(10, children + 1))}
+                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
                 <button
                   onClick={() => setShowGuestsPopover(false)}
-                  className="w-full bg-brand-primary text-brand-gold-light text-[10px] font-bold py-2 rounded-full text-center mt-2 uppercase tracking-wider"
+                  className="w-full bg-brand-primary text-brand-gold-light text-[10px] font-bold py-2 rounded-full text-center mt-2 uppercase tracking-wider cursor-pointer"
                 >
                   Confirm Guests
                 </button>
