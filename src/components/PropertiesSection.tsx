@@ -5,7 +5,10 @@
 
 import { useState } from "react";
 import { Star, ArrowRight, Compass, Filter } from "lucide-react";
+import { motion } from "motion/react";
 import { Property } from "../types";
+import SplitText from "./SplitText";
+import BlurText from "./BlurText";
 
 interface PropertiesSectionProps {
   properties: Property[];
@@ -13,6 +16,40 @@ interface PropertiesSectionProps {
   onBookProperty: (property: Property) => void;
   filteredDestination: string;
 }
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1], // Ultra-smooth easeOutExpo
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.85,
+      ease: [0.215, 0.61, 0.355, 1], // easeOutCubic
+    },
+  },
+};
 
 export default function PropertiesSection({
   properties,
@@ -38,22 +75,51 @@ export default function PropertiesSection({
   return (
     <section id="properties" className="py-24 md:py-32 px-4 bg-brand-background">
       <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center space-x-2 text-xs font-bold tracking-[0.25em] text-brand-secondary uppercase">
+        {/* Section Header with Staggered Scroll Animation */}
+        <motion.div 
+          className="text-center space-y-4 max-w-3xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
+          <motion.div 
+            variants={itemVariants}
+            className="inline-flex items-center space-x-2 text-xs font-bold tracking-[0.25em] text-brand-secondary uppercase"
+          >
             <Compass size={14} />
             <span>Curated Collection</span>
+          </motion.div>
+          <div className="w-full">
+            <SplitText
+              text="Explore Our Properties"
+              className="font-display text-4xl md:text-5xl font-medium tracking-tight text-brand-primary block"
+              tag="h2"
+              delay={40}
+              duration={1.25}
+              ease="power3.out"
+              splitType="chars"
+            />
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-brand-primary">
-            Explore Our Properties
-          </h2>
-          <p className="font-sans text-sm md:text-base text-brand-primary/70 font-light leading-relaxed">
-            Handpicked sanctuaries designed for the discerning traveler, blending local heritage with modern luxury.
-          </p>
-        </div>
+          <div className="w-full">
+            <BlurText
+              text="Handpicked sanctuaries designed for the discerning traveler, blending local heritage with modern luxury."
+              className="font-sans text-sm md:text-base text-brand-primary/70 font-light leading-relaxed max-w-2xl mx-auto flex flex-wrap justify-center"
+              delay={30}
+              animateBy="words"
+              direction="top"
+            />
+          </div>
+        </motion.div>
 
-        {/* Filters and search info bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-4 border-b border-brand-primary/5 pb-6">
+        {/* Filters and search info bar with Scroll Animation */}
+        <motion.div 
+          className="flex flex-col md:flex-row items-center justify-between gap-6 pt-4 border-b border-brand-primary/5 pb-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={itemVariants}
+        >
           {/* Filter Chips */}
           <div className="flex items-center space-x-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none no-scrollbar">
             <div className="flex items-center space-x-2 shrink-0">
@@ -81,11 +147,16 @@ export default function PropertiesSection({
               Filtered by: "{filteredDestination}"
             </div>
           )}
-        </div>
+        </motion.div>
 
         {/* Properties Cards Grid */}
         {filteredProperties.length === 0 ? (
-          <div className="text-center py-20 bg-white/40 rounded-3xl border border-brand-primary/5 space-y-3">
+          <motion.div 
+            className="text-center py-20 bg-white/40 rounded-3xl border border-brand-primary/5 space-y-3"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <p className="font-display text-lg text-brand-primary/50">No Sanctuaries Match Your Criteria</p>
             <p className="text-xs text-brand-primary/40">Try resetting your filters or destination search.</p>
             <button
@@ -94,19 +165,27 @@ export default function PropertiesSection({
             >
               RESET FILTERS
             </button>
-          </div>
+          </motion.div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredProperties.map((property, idx) => {
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+          >
+            {filteredProperties.map((property) => {
               // We can highlight Heritage Palace (or second item) with a slightly different visual size or badge
               const isHighlighted = property.id === "heritage-palace";
               
               return (
-                <div
+                <motion.div
                   key={property.id}
                   id={`property-card-${property.id}`}
                   onClick={() => onSelectProperty(property)}
-                  className={`group relative rounded-[28px] overflow-hidden bg-white shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 select-none ${
+                  variants={cardVariants}
+                  whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
+                  className={`group relative rounded-[28px] overflow-hidden bg-white shadow-2xl cursor-pointer select-none ${
                     isHighlighted 
                       ? "shadow-brand-primary/10 ring-1 ring-brand-secondary/35 lg:scale-105 z-10" 
                       : "shadow-brand-primary/4 hover:shadow-brand-primary/8"
@@ -181,10 +260,10 @@ export default function PropertiesSection({
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         )}
       </div>
     </section>

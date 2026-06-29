@@ -5,7 +5,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { MapPin, Calendar, User, Search, Check, Sparkles } from "lucide-react";
-import SplitText from "./SplitText";
+import TextType from "./TextType";
 import BlurText from "./BlurText";
 
 const heroNature = "https://i.postimg.cc/9MBBdTWW/nature.png";
@@ -86,14 +86,16 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
           <span>Curated Global Sanctuaries</span>
         </div>
 
-        <SplitText
+        <TextType
           text="Luxury Stay Experience"
           className="font-display text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-brand-background leading-[1.1]"
-          tag="h1"
-          delay={50}
-          duration={1.25}
-          ease="power3.out"
-          splitType="chars"
+          as="h1"
+          typingSpeed={60}
+          initialDelay={300}
+          loop={false}
+          showCursor={true}
+          cursorCharacter="|"
+          cursorClassName="text-brand-gold-light"
         />
 
         <BlurText

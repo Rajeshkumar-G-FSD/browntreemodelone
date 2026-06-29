@@ -58,7 +58,7 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
           <img 
             src={btLogo} 
             alt="BT Logo" 
-            className="h-10 md:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105" 
+            className="h-12 md:h-16 w-auto object-contain transition-all duration-300 group-hover:scale-105" 
           />
         </button>
 

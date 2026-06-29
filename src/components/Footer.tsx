@@ -41,7 +41,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               <img 
                 src={btLogo} 
                 alt="BT Logo" 
-                className="h-12 md:h-14 w-auto object-contain" 
+                className="h-14 md:h-18 w-auto object-contain" 
               />
             </div>
             <p className="font-sans text-xs sm:text-sm text-brand-background/70 font-light leading-relaxed max-w-sm">
